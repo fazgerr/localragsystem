@@ -1,0 +1,30 @@
+{
+  "algorithm": "sha256",
+  "files": [
+    {
+      "filename": "IE_InReportTemplate.docx",
+      "sha256": "bd35cc76e45a13db3ea6f4be05a3b98bef67d6e3bfecfe11219f94de6f8f8c4f",
+      "bytes": 274275
+    },
+    {
+      "filename": "IE_STAJ_PROGRAMI_KILAVUZU (TR) - 29.09.2025 (1).docx",
+      "sha256": "eaeac9e99e700e94bd69d26d5e996b55d2597403729c7162aeb83691c0155337",
+      "bytes": 44681
+    },
+    {
+      "filename": "IE_Stajyer_Formu.docx",
+      "sha256": "c986ec52a3dca50e9ed9a9512dc4da7b1b61cf78e277878d9c739d3e98abaf63",
+      "bytes": 43964
+    },
+    {
+      "filename": "Staj Formu Güncel.docx",
+      "sha256": "2f7955e53c8159b06b3a8456428910b9b870ab8f8f819b4a7bde9357c2dd8629",
+      "bytes": 40320
+    },
+    {
+      "filename": "staj2025-05-15 173635.jpg",
+      "sha256": "24b7bbd341278d86a85f75fb9e199c84113a3371b3d6870c7e84046e651efab8",
+      "bytes": 130593
+    }
+  ]
+}

@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>AGÜ IE Staj Asistanı – Endüstri Mühendisliği</title>
+  <style>
+    * { box-sizing: border-box; }
+    :root { 
+      --primary: #2563eb; --primary-dark: #1e40af; --primary-light: #dbeafe;
+      --success: #059669; --danger: #dc2626; --warning: #d97706;
+      --bg: #f8fafc; --bg-card: #fff; --text: #1e293b; --text-muted: #64748b;
+      --border: #e2e8f0; --shadow-sm: 0 1px 2px rgba(0,0,0,.05); 
+      --shadow-md: 0 4px 6px rgba(0,0,0,.1); --shadow-lg: 0 10px 25px rgba(0,0,0,.1);
+      --radius: 12px; --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a; --bg-card: #1e293b; --text: #f1f5f9; --text-muted: #cbd5e1;
+        --border: #334155; --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+        --shadow-md: 0 4px 6px rgba(0,0,0,.4); --shadow-lg: 0 10px 25px rgba(0,0,0,.5);
+      }
+    }
+    body { margin: 0; background: var(--bg); color: var(--text); line-height: 1.5; transition: var(--transition); }
+    main { max-width: 1200px; margin: 0 auto; padding: 24px 16px 48px; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-md); transition: var(--transition); }
+    .card:hover { box-shadow: var(--shadow-lg); }
+    header.card { padding: 32px 24px; margin-bottom: 24px; background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); color: #fff; }
+    header.card .muted { color: #dbeafe; }
+    h1 { margin: 0 0 8px; font-size: clamp(24px, 5vw, 36px); font-weight: 700; }
+    .subtitle { font-size: 14px; opacity: 0.9; }
+    .grid { display: grid; gap: 24px; grid-template-columns: 1fr 1fr; }
+    .panel { padding: 24px; display: flex; flex-direction: column; }
+    label { display: block; font-weight: 600; margin-bottom: 12px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); }
+    textarea { width: 100%; min-height: 140px; resize: vertical; padding: 14px; border: 1.5px solid var(--border); border-radius: 8px; font: inherit; background: var(--bg-card); color: var(--text); transition: var(--transition); }
+    textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+    textarea::placeholder { color: var(--text-muted); opacity: 0.7; }
+    button { appearance: none; border: 0; border-radius: 8px; padding: 12px 24px; background: var(--primary); color: #fff; font-weight: 600; cursor: pointer; transition: var(--transition); font-size: 14px; }
+    button:hover:not(:disabled) { background: var(--primary-dark); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+    button:active:not(:disabled) { transform: translateY(0); }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-secondary { background: var(--border); color: var(--text); }
+    .btn-secondary:hover:not(:disabled) { background: #cbd5e1; }
+    .row { display: flex; gap: 12px; align-items: center; margin-top: 16px; flex-wrap: wrap; }
+    .status { font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 6px; }
+    .pill { display: inline-flex; padding: 6px 12px; border-radius: 999px; background: var(--primary-light); color: var(--primary); font-size: 12px; font-weight: 600; white-space: nowrap; }
+    .pill.ok { background: #d1fae5; color: var(--success); }
+    .pill.error { background: #fee2e2; color: var(--danger); }
+    .pill.loading { background: #fef3c7; color: var(--warning); }
+    .answer-box { background: var(--bg); padding: 16px; border-radius: 8px; border-left: 4px solid var(--primary); margin-bottom: 16px; }
+    .answer-box.ok { border-left-color: var(--success); background: #f0fdf4; }
+    .answer-box.error { border-left-color: var(--danger); background: #fef2f2; }
+    .answer { white-space: pre-wrap; line-height: 1.7; font-size: 15px; word-wrap: break-word; }
+    .sources { margin: 0; padding-left: 20px; list-style: none; padding-left: 0; }
+    .sources li { padding: 8px 0; padding-left: 24px; position: relative; font-size: 14px; color: var(--text-muted); }
+    .sources li:before { content: "📄"; position: absolute; left: 0; }
+    .error { color: var(--danger); }
+    .ok { color: var(--success); }
+    .loading { color: var(--warning); }
+    .muted { color: var(--text-muted); }
+    .small { font-size: 13px; }
+    .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid var(--primary); border-top-color: transparent; border-radius: 50%; animation: spin 0.6s linear infinite; margin-right: 6px; }
+    .toast { position: fixed; bottom: 24px; right: 24px; background: var(--text); color: #fff; padding: 14px 20px; border-radius: 8px; box-shadow: var(--shadow-lg); max-width: 320px; animation: slideIn 0.3s ease-out; z-index: 1000; }
+    .toast.success { background: var(--success); }
+    .toast.error { background: var(--danger); }
+    .kbd { display: inline-block; padding: 2px 6px; background: var(--border); border-radius: 4px; font-size: 11px; font-family: monospace; }
+    .hint { font-size: 12px; color: var(--text-muted); margin-top: 8px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    @media (max-width: 768px) { 
+      .grid { grid-template-columns: 1fr; } 
+      header.card { padding: 24px 16px; }
+      main { padding: 16px 12px 32px; }
+      .panel { padding: 16px; }
+      .toast { left: 16px; right: 16px; bottom: 16px; }
+    }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="card">
+      <h1>🎓 AGÜ IE Staj Asistanı</h1>
+      <div class="subtitle">Abdullah Gül Üniversitesi • Endüstri Mühendisliği Bölümü</div>
+      <div class="subtitle">Yerel, kaynak doğrulamalı staj bilgi asistanı • Microsoft Foundry Local + Qwen</div>
+      <div class="row" style="margin-top: 16px;">
+        <span class="pill" id="health-pill">⏳ Durum: kontrol ediliyor...</span>
+        <span class="muted small" id="model-info"></span>
+      </div>
+    </header>
+
+    <section class="grid">
+      <div class="card panel">
+        <label for="question">AGÜ Endüstri Mühendisliği staj sorunuzu sorun</label>
+        <textarea id="question" placeholder="Örn. IE 297 kaç iş günü? • IE 197 nedir? • Staj raporu kaç sayfa olmalı?"></textarea>
+        <div class="hint">💡 İpucu: <span class="kbd">Ctrl</span> + <span class="kbd">⏎</span> ya da click ile gönder</div>
+        <div class="row">
+          <button id="ask">📤 Soruyu Gönder</button>
+          <button id="clear-btn" class="btn-secondary" style="padding: 12px 16px;">🗑️ Temizle</button>
+          <span class="status" id="request-status"></span>
+        </div>
+      </div>
+
+      <div class="card panel">
+        <label>✨ Sonuç</label>
+        <div id="answer-container" style="flex: 1; display: flex; flex-direction: column;">
+          <div class="answer-box" id="answer">Henüz soru sorulmadı. Başlamak için yukarıya bir soru yazın!</div>
+          <div style="margin-top: auto;">
+            <div class="small muted" style="margin-bottom: 12px; margin-top: 16px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">📚 Kullanılan Kaynaklar</div>
+            <ol id="sources" class="sources"></ol>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast-container"></div>
+
+  <script>
+    // ===== Utilities =====
+    const el = (id) => document.getElementById(id);
+    const query = (sel) => document.querySelector(sel);
+    const queryAll = (sel) => document.querySelectorAll(sel);
+    
+    // Cache DOM
+    const healthPill = el("health-pill");
+    const modelInfo = el("model-info");
+    const requestStatus = el("request-status");
+    const answer = el("answer");
+    const sources = el("sources");
+    const askBtn = el("ask");
+    const clearBtn = el("clear-btn");
+    const question = el("question");
+    const toastContainer = el("toast-container");
+
+    // ===== Toast Notifications =====
+    function showToast(message, type = 'info', duration = 3000) {
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      toastContainer.appendChild(toast);
+      setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease-in';
+        setTimeout(() => toast.remove(), 300);
+      }, duration);
+    }
+
+    // ===== UI Rendering =====
+    function setHealth(status, message) {
+      const icons = { ok: '✅', error: '❌', loading: '⏳' };
+      healthPill.textContent = `${icons[status]} Durum: ${status === 'ok' ? 'Hazır' : status === 'error' ? 'Hata' : 'Başlangıç'}`;
+      healthPill.className = "pill " + (status === "ok" ? "ok" : status === "error" ? "error" : "loading");
+      modelInfo.textContent = message || "";
+    }
+
+    function renderSources(items) {
+      sources.innerHTML = "";
+      if (!items || !items.length) {
+        const li = document.createElement("li");
+        li.textContent = "(Kaynak bulunamadı)";
+        li.style.color = 'var(--text-muted)';
+        sources.appendChild(li);
+        return;
+      }
+      for (const item of items) {
+        const li = document.createElement("li");
+        li.innerHTML = `<strong>${item.title}</strong><br><span style="font-size: 12px; color: var(--text-muted);">${item.sourceFile}</span><br><span style="font-size: 11px; color: var(--text-muted);">Skor: ${(item.score || 0).toFixed(2)}</span>`;
+        sources.appendChild(li);
+      }
+    }
+
+    // ===== API Calls =====
+    async function refreshHealth() {
+      try {
+        const res = await fetch("/api/health");
+        const data = await res.json();
+        setHealth(data.status, `v${data.version} · ${data.chatModel} · ${data.embeddingModel} · ${data.documents} belge`);
+        if (data.status === "ok") requestStatus.textContent = "";
+      } catch (error) {
+        setHealth("error", error.message);
+      }
+    }
+
+    async function ask() {
+      const message = question.value.trim();
+      if (!message) {
+        showToast("Soru metni boş olamaz!", 'error');
+        return;
+      }
+      
+      askBtn.disabled = true;
+      requestStatus.innerHTML = '<span class="spinner"></span>Yanıt alınıyor...';
+      requestStatus.className = "status loading";
+      answer.textContent = "Yükleniyor...";
+      answer.className = "answer-box";
+      
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ message, history: [] }),
+        });
+        
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        
+        const data = await res.json();
+        answer.textContent = data.text || data.error || "Sonuç alınamadı.";
+        answer.className = "answer-box " + (data.grounded ? "ok" : "");
+        renderSources(data.sources || []);
+        
+        requestStatus.textContent = data.reason ? `ℹ️ ${data.reason}` : "✓ Tamamlandı";
+        requestStatus.className = "status " + (data.grounded ? "ok" : "loading");
+        showToast("✓ Cevap alındı!", 'success');
+      } catch (error) {
+        answer.textContent = `❌ Hata: ${error.message}`;
+        answer.className = "answer-box error";
+        requestStatus.textContent = `⚠️ ${error.message}`;
+        requestStatus.className = "status error";
+        showToast("❌ İstek başarısız!", 'error');
+      } finally {
+        askBtn.disabled = false;
+      }
+    }
+
+    // ===== Event Listeners =====
+    askBtn.addEventListener("click", ask);
+    clearBtn.addEventListener("click", () => {
+      question.value = "";
+      answer.textContent = "Henüz soru sorulmadı. Başlamak için yukarıya bir soru yazın!";
+      answer.className = "answer-box";
+      requestStatus.textContent = "";
+      sources.innerHTML = "";
+      question.focus();
+      showToast("Temizlendi", 'success', 2000);
+    });
+    
+    question.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && (event.ctrlKey || event.metaKey)) {
+        event.preventDefault();
+        ask();
+      }
+    });
+
+    // ===== Initialization =====
+    refreshHealth();
+    question.focus();
+  </script>
+</body>
+</html>

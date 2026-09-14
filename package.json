@@ -1,0 +1,41 @@
+{
+  "name": "agu-staj-asistani-rag",
+  "version": "4.0.6",
+  "description": "AGÜ Endüstri Mühendisliği için Microsoft Foundry Local, Qwen3 embeddings ve SQLite ile çalışan çevrimdışı staj RAG asistanı",
+  "type": "module",
+  "scripts": {
+    "install:foundry": "npm install && npm run diagnose:foundry",
+    "ingest": "node src/ingest.js",
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test test/*.test.js",
+    "diagnose": "node src/diagnose.js",
+    "live-eval": "node test/live-eval.js",
+    "setup": "npm run install:foundry && npm run ingest && npm test && npm run diagnose",
+    "check:foundry": "npm run diagnose:foundry",
+    "diagnose:foundry": "node src/checkFoundryInstall.js",
+    "repair:foundry": "npm run install:foundry"
+  },
+  "dependencies": {
+    "foundry-local-sdk": "1.2.0",
+    "foundry-local-sdk-winml": "1.2.0"
+  },
+  "allowScripts": {
+    "foundry-local-sdk@1.2.0": true,
+    "foundry-local-sdk-winml": true
+  },
+  "engines": {
+    "node": ">=22.13.0 <24"
+  },
+  "license": "MIT",
+  "keywords": [
+    "foundry-local",
+    "rag",
+    "embeddings",
+    "sqlite",
+    "offline-ai",
+    "qwen3-embedding",
+    "qwen2.5",
+    "turkish"
+  ]
+}
